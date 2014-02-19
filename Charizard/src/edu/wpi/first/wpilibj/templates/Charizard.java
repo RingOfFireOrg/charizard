@@ -36,8 +36,6 @@ public class Charizard extends SimpleRobot {
     WisVictorControler wis = new WisVictorControler(5);
     SuperCompressor compressorSystem = new SuperCompressor(1,1);
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
-    rampableValue wisSpeed;
-    double wisTarget;
     
     /**
      * This function is called once each time the robot enters autonomous mode.
@@ -58,8 +56,7 @@ public class Charizard extends SimpleRobot {
         charizardDrive.setup();
         while(isEnabled() && isOperatorControl()) {
             charizardDrive.drive(driveStick.getX(), driveStick.getY(), twistStick.getZ(), itsAGyro.getAngle());
-            wisTarget = wisSpeed.set(controlStick.getThrottle());
-            wis.drive(wisNormal.get(), wisInvert.get(), wisTarget);
+            wis.drive(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
             compressorSystem.update();
         }

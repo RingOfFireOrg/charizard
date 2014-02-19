@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class SuperCompressor {
     int compressorPwm, switchPwm;
-    private final Compressor compressor;
+    private Compressor compressor;
     boolean pressureSwitchVal, pressureSwitchPreval = true;
     boolean prevalue;
     
     public SuperCompressor(int compressorPwm, int switchPwm) {
-        compressor = new Compressor(compressorPwm, switchPwm);
+        compressor = new Compressor(1, 1);
     }
     
     public void update() {
