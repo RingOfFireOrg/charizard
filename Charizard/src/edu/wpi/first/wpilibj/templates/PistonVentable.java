@@ -19,7 +19,6 @@ public class PistonVentable {
     private MySolenoid wisExtend;
     private MySolenoid wisRetract;
     boolean ventState, upState, downState;
-    boolean a0a = false, a1a = true;
     boolean multiButtonError = false;
     
     public PistonVentable(int slot, int sol1, int sol2, int sol3, int sol4) {                               

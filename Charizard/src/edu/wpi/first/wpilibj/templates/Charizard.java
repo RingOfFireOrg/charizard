@@ -36,11 +36,18 @@ public class Charizard extends SimpleRobot {
     WisVictorControler wis = new WisVictorControler(5);
     SuperCompressor compressorSystem = new SuperCompressor(1,1);
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
+    String serialNumber = "2014.2.2";
+    String descriptionL1 = "updated version of the code that was working"; 
+    String descriptionL2 = "on 2//2014, created on 2/22/2014. includes";
+    String descriptionL3 = "documentation, this is that documentation";
+    String operationalStatus = "under testing";    
+    DashboardInterface documentation = new DashboardInterface("Version",serialNumber, descriptionL1, descriptionL2, descriptionL3, operationalStatus);
     
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
         charizardDrive.drive(0,0,0,0);
@@ -52,9 +59,11 @@ public class Charizard extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+        documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
         while(isEnabled() && isOperatorControl()) {
+            Timer.delay(0.01);
             charizardDrive.drive(driveStick.getX(), driveStick.getY(), twistStick.getZ(), itsAGyro.getAngle());
             wis.drive(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
@@ -66,6 +75,6 @@ public class Charizard extends SimpleRobot {
      * This function is called once each time the robot enters test mode.
      */
     public void test() {
-    
+        documentation.writeToDashboard();
     }
 }
