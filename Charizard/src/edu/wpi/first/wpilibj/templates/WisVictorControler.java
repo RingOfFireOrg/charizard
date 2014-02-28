@@ -9,6 +9,7 @@
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -19,7 +20,7 @@ public class WisVictorControler {
     //boolean victor, v;
     private Victor motorV;
     
-    boolean nState = false, iState = true;
+    boolean nState = true, iState = false;
     boolean doubleButtonError;
     
     public WisVictorControler(int pwm) {
@@ -39,6 +40,10 @@ public class WisVictorControler {
         }
         if(iState) {
             value *= -1;
+            SmartDashboard.putString("WIS Direction:", " Output");
+        }
+        else{
+            SmartDashboard.putString("WIS Direction:", " Intake");
         }
         motorV.set(value);
     }

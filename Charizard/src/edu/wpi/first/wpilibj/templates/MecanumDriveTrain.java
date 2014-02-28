@@ -18,6 +18,7 @@ public class MecanumDriveTrain {
     boolean inversion, activeGyro, invertForward;
     private RobotDrive driveTrain;
     boolean foo;
+    double threshold = 0.05;
     
     public MecanumDriveTrain(int pwm1, int pwm2, int pwm3, int pwm4, boolean inversion, boolean activeGyro, boolean invertForward) {
         driveTrain = new RobotDrive(pwm1, pwm2, pwm3, pwm4);
@@ -36,12 +37,12 @@ public class MecanumDriveTrain {
     }
     
     private double desensitizeTwist(double rot){
-        if (Math.abs(rot) < 0.5) {
+        if (Math.abs(rot) < threshold) {
             rot = 0;
         } else if (rot > 0) {
-            rot -= 0.5;
+            rot -= threshold;
         } else {
-            rot += 0.5;
+            rot += threshold;
         }
         return rot;
     }

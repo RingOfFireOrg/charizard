@@ -41,25 +41,65 @@ public class Charizard extends SimpleRobot {
     String descriptionL2 = "on 2//2014, created on 2/22/2014. includes";
     String descriptionL3 = "documentation, this is that documentation";
     String operationalStatus = "under testing";    
-    DashboardInterface documentation = new DashboardInterface("Version",serialNumber, descriptionL1, descriptionL2, descriptionL3, operationalStatus);
+   // DashboardInterface documentation = new DashboardInterface("Version",serialNumber, descriptionL1, descriptionL2, descriptionL3, operationalStatus);
     
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
+    int feetPerSecond = (1);
+    int autoStraightFeet = (0);
+    int autoLeftFeet = (0);
+    
+    
+    int autoStraightSeconds = (autoStraightFeet / feetPerSecond);
+    int autoLeftSeconds = (autoLeftFeet / feetPerSecond);
+    
+/* Auto
+*************************************************************************
+                _                                              
+     /\        | |                                             
+    /  \  _   _| |_ ___  _ __   ___  _ __ ___   ___  _   _ ___ 
+   / /\ \| | | | __/ _ \| '_ \ / _ \| '_ ` _ \ / _ \| | | / __|
+  / ____ \ |_| | || (_) | | | | (_) | | | | | | (_) | |_| \__ \
+ /_/    \_\__,_|\__\___/|_| |_|\___/|_| |_| |_|\___/ \__,_|___/
+                                                               
+* This function is called once each time the robot enters autonomous mode.
+  
+***************************************************************************/
     public void autonomous() {
-        documentation.writeToDashboard();
+    //    documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
-        charizardDrive.drive(0,0,0,0);
-        Timer.delay(0);
-        charizardDrive.drive(0,0,0,0);
+        
+        charizardDrive.drive(1,1,1,1);
+        Timer.delay(autoStraightSeconds); //Straight to the goal
+        
+        
+        charizardDrive.drive(0,0,0,0); // pause
+        Timer.delay(0.2);
+        charizardDrive.drive(0.5,-0.5,0.5,-0.5);
+        Timer.delay(autoLeftSeconds);  //left to the goal
+        
+        charizardDrive.drive(0,0,0,0); //stop at the goal
+        
+        wis.drive(true, false, -1);
+        Timer.delay(0.4);
+        wis.drive(true, false, 0);  //Wis out
     }
 
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
+/* Teleop
+**************************************************************************
+  _______   _                  
+ |__   __| | |                 
+    | | ___| | ___  ___  _ __  
+    | |/ _ \ |/ _ \/ _ \| '_ \ 
+    | |  __/ |  __/ (_) | |_) |
+    |_|\___|_|\___|\___/| .__/ 
+                        | |    
+                        |_|   
+* This function is called once each time the robot enters operator control.
+    
+    
+****************************************************************************/
     public void operatorControl() {
-        documentation.writeToDashboard();
+   //     documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
         while(isEnabled() && isOperatorControl()) {
@@ -75,6 +115,6 @@ public class Charizard extends SimpleRobot {
      * This function is called once each time the robot enters test mode.
      */
     public void test() {
-        documentation.writeToDashboard();
+       // documentation.writeToDashboard();
     }
 }
