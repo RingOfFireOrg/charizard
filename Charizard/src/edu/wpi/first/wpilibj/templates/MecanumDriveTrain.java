@@ -18,7 +18,7 @@ public class MecanumDriveTrain {
     boolean inversion, activeGyro, invertForward;
     private RobotDrive driveTrain;
     boolean foo;
-    double threshold = 0.05;
+    double threshold = 0.5;
     
     public MecanumDriveTrain(int pwm1, int pwm2, int pwm3, int pwm4, boolean inversion, boolean activeGyro, boolean invertForward) {
         driveTrain = new RobotDrive(pwm1, pwm2, pwm3, pwm4);

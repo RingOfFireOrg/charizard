@@ -43,13 +43,15 @@ public class Charizard extends SimpleRobot {
     String operationalStatus = "under testing";    
    // DashboardInterface documentation = new DashboardInterface("Version",serialNumber, descriptionL1, descriptionL2, descriptionL3, operationalStatus);
     
-    int feetPerSecond = (1);
-    int autoStraightFeet = (0);
-    int autoLeftFeet = (0);
+    
+    double SidefeetPerSecond = (0.75);
+    double StraightfeetPerSecond = (1);
+    double autoStraightFeet = (17);
+    double autoSideFeet = (2);
     
     
-    int autoStraightSeconds = (autoStraightFeet / feetPerSecond);
-    int autoLeftSeconds = (autoLeftFeet / feetPerSecond);
+    double autoStraightSeconds = (75); //(autoStraightFeet / StraightfeetPerSecond);
+    double autoLeftSeconds = (0);//(autoSideFeet / SidefeetPerSecond);
     
 /* Auto
 *************************************************************************
@@ -68,20 +70,22 @@ public class Charizard extends SimpleRobot {
         compressorSystem.start();
         charizardDrive.setup();
         
-        charizardDrive.drive(1,1,1,1);
-        Timer.delay(autoStraightSeconds); //Straight to the goal
+        charizardDrive.drive(0.0,0.5,0,0);
+        Timer.delay(4); //Straight to the goal
+        charizardDrive.drive(0,0,0,0); // Stop
         
+        wis.drive(false, true, 0.5);
+        /*
+        Timer.delay(0.2); //Pause
         
-        charizardDrive.drive(0,0,0,0); // pause
-        Timer.delay(0.2);
-        charizardDrive.drive(0.5,-0.5,0.5,-0.5);
+        charizardDrive.drive(0,1,0,0);
         Timer.delay(autoLeftSeconds);  //left to the goal
-        
         charizardDrive.drive(0,0,0,0); //stop at the goal
         
         wis.drive(true, false, -1);
         Timer.delay(0.4);
         wis.drive(true, false, 0);  //Wis out
+        */
     }
 
 /* Teleop
