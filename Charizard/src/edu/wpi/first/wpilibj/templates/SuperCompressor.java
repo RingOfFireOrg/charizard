@@ -18,8 +18,8 @@ public class SuperCompressor {
     boolean pressureSwitchVal, pressureSwitchPreval = true;
     boolean prevalue;
     
-    public SuperCompressor(int compressorPwm, int switchPwm) {
-        compressor = new Compressor(1, 1);
+    public SuperCompressor(int switchPwm, int compressorPwm) {  // int pressureSwitchChannel, int compressorRelayChannel
+        compressor = new Compressor(switchPwm, compressorPwm);
     }
     
     public void update() {
