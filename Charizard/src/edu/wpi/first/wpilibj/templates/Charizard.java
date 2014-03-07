@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +32,7 @@ public class Charizard extends SimpleRobot {
     JoystickButton wisUp = new JoystickButton(controlStick, 4);
     JoystickButton wisNormal = new JoystickButton(controlStick, 11);
     JoystickButton wisInvert = new JoystickButton(controlStick, 7);
+    JoystickButton lightsToggle = new JoystickButton(twistStick, 1);
     // joystickName, joystickButton
     
     
@@ -42,6 +44,7 @@ public class Charizard extends SimpleRobot {
     WisVictorControler wis = new WisVictorControler(5);
     SuperCompressor compressorSystem = new SuperCompressor(1,2); // int pressureSwitchChannel, int compressorRelayChannel
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
+    Lights light = new Lights(8);
     String serialNumber = "2014.2.2";
     String descriptionL1 = "updated version of the code that was working"; 
     String descriptionL2 = "on 2//2014, created on 2/22/2014. includes";
@@ -75,20 +78,21 @@ public class Charizard extends SimpleRobot {
 ***************************************************************************/
     public void autonomous() {
     //    documentation.writeToDashboard();
-        long delayTime, startTime, elapsed;
-        int seconds = 3;
+        //long delayTime, startTime, elapsed;
+        //int seconds = 3;
         
         compressorSystem.start();
         charizardDrive.setup();
+        auto2();
         //thingy.delay(6);
-
+/*
         delayTime = seconds*1000;
         startTime = System.currentTimeMillis();
         do {
             charizardDrive.drive(0.0,0.5,0,0);
             elapsed = System.currentTimeMillis()-startTime;
         }   while(elapsed<delayTime);
-        charizardDrive.drive(0, 0, 0, 0);
+        charizardDrive.drive(0, 0, 0, 0); */
         //thingy.delay(4); //Straight to the goal
         //charizardDrive.drive(0,0,0,0); // Stop
         
@@ -106,6 +110,20 @@ public class Charizard extends SimpleRobot {
         wis.drive(true, false, 0);  //Wis out
         
         */
+    }
+    public void auto2() {
+        long start = System.currentTimeMillis();
+        long currentTime;
+        while (isAutonomous() && isEnabled()) {
+            currentTime = System.currentTimeMillis();
+            if ((currentTime >= start) && (currentTime <= start + 3000)) {
+                charizardDrive.drive(0, 0.5, 0, 0);
+            } else {
+                charizardDrive.drive(0,0,0,0);
+            }
+            
+
+        }
     }
 
 /* Teleop
@@ -132,6 +150,7 @@ public class Charizard extends SimpleRobot {
             wis.drive(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
             compressorSystem.update();
+            light.setLight(lightsToggle.get());
         }
     }
     
