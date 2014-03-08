@@ -33,6 +33,7 @@ public class Charizard extends SimpleRobot {
     JoystickButton wisNormal = new JoystickButton(controlStick, 11);
     JoystickButton wisInvert = new JoystickButton(controlStick, 7);
     JoystickButton lightsToggle = new JoystickButton(twistStick, 1);
+    JoystickButton shootButton = new JoystickButton(controlStick, 1);
     // joystickName, joystickButton
     
     
@@ -42,8 +43,10 @@ public class Charizard extends SimpleRobot {
     
     Gyro itsAGyro = new Gyro(1);
     WisVictorControler wis = new WisVictorControler(5);
+    RunnableMotors shooter = new RunnableMotors(6);
     SuperCompressor compressorSystem = new SuperCompressor(1,2); // int pressureSwitchChannel, int compressorRelayChannel
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
+    Control myControl = new Control();
     Lights light = new Lights(8);
     String serialNumber = "2014.2.2";
     String descriptionL1 = "updated version of the code that was working"; 
@@ -144,13 +147,23 @@ public class Charizard extends SimpleRobot {
    //     documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
+        long currentTime, startTime=2, stopTime=1;
+        boolean preVal = false, shootVal = false;
         while(isEnabled() && isOperatorControl()) {
             Timer.delay(0);
+            currentTime = System.currentTimeMillis();
             charizardDrive.drive(driveStick.getX(), driveStick.getY(), twistStick.getZ(), itsAGyro.getAngle());
             wis.drive(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
             compressorSystem.update();
             light.setLight(lightsToggle.get());
+            shootVal = shootButton.get();
+            if (shootVal && !preVal){
+                startTime = currentTime;
+                stopTime = currentTime+200;
+            }
+            preVal = shootVal;
+            myControl.timedRun(shooter, startTime, stopTime, 1);
         }
     }
     
