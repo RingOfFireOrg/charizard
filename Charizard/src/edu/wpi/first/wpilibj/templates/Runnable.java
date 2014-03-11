@@ -14,6 +14,8 @@ public interface Runnable {
     
     public void start(double s); 
     
+    public void drive(double x, double y, double z, double gyro);
+    
     public void stop(); 
           
 }

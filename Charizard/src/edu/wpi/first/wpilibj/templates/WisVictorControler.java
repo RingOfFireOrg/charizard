@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  * @author Kyle
  */
-public class WisVictorControler {
+public class WisVictorControler implements Runnable{
     int pwm;
     //boolean victor, v;
     private Victor motorV;
@@ -26,8 +26,13 @@ public class WisVictorControler {
     public WisVictorControler(int pwm) {
         motorV = new Victor(pwm);
     }
+    public void start(double s){
+        motorV.set(s);
+    }
     
-    public void drive(boolean nButton, boolean iButton, double value){
+    public void drive(double x, double y, double z, double gyro) {}
+    
+    public void runWis(boolean nButton, boolean iButton, double value){
         value = (value-1)/2;
         if (nButton && !iButton) {
             iState = false;
@@ -45,7 +50,11 @@ public class WisVictorControler {
         else{
             SmartDashboard.putString("WIS Direction:", " Intake");
         }
-        motorV.set(value);
+        this.start(value);
+    }
+    
+    public void stop(){
+        
     }
     
     public boolean readError() {

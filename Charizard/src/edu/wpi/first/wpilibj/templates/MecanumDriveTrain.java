@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
  *
  * @author Kyle
  */
-public class MecanumDriveTrain {
+public class MecanumDriveTrain implements Runnable{
     int pwm1, pwm2, pwm3, pwm4;
     boolean inversion, activeGyro, invertForward;
     private RobotDrive driveTrain;
@@ -24,6 +24,7 @@ public class MecanumDriveTrain {
         driveTrain = new RobotDrive(pwm1, pwm2, pwm3, pwm4);
         foo = inversion;
     }
+    public void start(double s) {}
     
     public void drive(double x, double y, double rotation, double gyro){ 
         rotation = this.desensitizeTwist(rotation);
@@ -34,6 +35,9 @@ public class MecanumDriveTrain {
             gyro = 0;
         }
         driveTrain.mecanumDrive_Cartesian(x, y, rotation, gyro);
+    }
+    public void stop() {
+        this.drive(0,0,0,0);
     }
     
     private double desensitizeTwist(double rot){

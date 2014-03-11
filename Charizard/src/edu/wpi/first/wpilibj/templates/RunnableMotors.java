@@ -28,6 +28,8 @@ public class RunnableMotors implements Runnable{
     public void start(double s) {
         this.setMotors(s);
     }
+    public void drive(double x, double y, double z, double gyro) {};
+    
     public void stop() {
         this.setMotors(0);
     }

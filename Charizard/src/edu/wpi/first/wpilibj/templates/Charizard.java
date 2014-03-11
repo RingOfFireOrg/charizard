@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -116,15 +115,8 @@ public class Charizard extends SimpleRobot {
     }
     public void auto2() {
         long start = System.currentTimeMillis();
-        long currentTime;
         while (isAutonomous() && isEnabled()) {
-            currentTime = System.currentTimeMillis();
-            if ((currentTime >= start) && (currentTime <= start + 3000)) {
-                charizardDrive.drive(0, 0.5, 0, 0);
-            } else {
-                charizardDrive.drive(0,0,0,0);
-            }
-            
+            myControl.timedDrive(charizardDrive, start, start+3000, 0, 0.5, 0);
 
         }
     }
@@ -153,14 +145,14 @@ public class Charizard extends SimpleRobot {
             Timer.delay(0);
             currentTime = System.currentTimeMillis();
             charizardDrive.drive(driveStick.getX(), driveStick.getY(), twistStick.getZ(), itsAGyro.getAngle());
-            wis.drive(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
+            wis.runWis(wisNormal.get(), wisInvert.get(), controlStick.getThrottle());
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
             compressorSystem.update();
             light.setLight(lightsToggle.get());
             shootVal = shootButton.get();
             if (shootVal && !preVal){
                 startTime = currentTime;
-                stopTime = currentTime+200;
+                stopTime = currentTime+215;
             }
             preVal = shootVal;
             myControl.timedRun(shooter, startTime, stopTime, 1);
