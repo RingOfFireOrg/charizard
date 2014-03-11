@@ -8,6 +8,7 @@
 package edu.wpi.first.wpilibj.templates;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -39,13 +40,14 @@ public class Charizard extends SimpleRobot {
     MecanumDriveTrain charizardDrive = new MecanumDriveTrain(1, 2, 3, 4, true, false, true); 
     // PWM frontLeft, backLeft, frontRight, backRight, invertFrontLeft, invertBackLeft, invertFrontRight
     
-    
+    DigitalInput shootLimit = new DigitalInput(1);
     Gyro itsAGyro = new Gyro(1);
     WisVictorControler wis = new WisVictorControler(5);
     RunnableMotors shooter = new RunnableMotors(6);
     SuperCompressor compressorSystem = new SuperCompressor(1,2); // int pressureSwitchChannel, int compressorRelayChannel
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
-    Control myControl = new Control();
+    Control shootControl = new Control(shooter);
+    Control driveControl = new Control(charizardDrive);
     Lights light = new Lights(8);
     String serialNumber = "2014.2.2";
     String descriptionL1 = "updated version of the code that was working"; 
@@ -115,8 +117,9 @@ public class Charizard extends SimpleRobot {
     }
     public void auto2() {
         long start = System.currentTimeMillis();
+        driveControl.setTime(start, start+3000);
         while (isAutonomous() && isEnabled()) {
-            myControl.timedDrive(charizardDrive, start, start+3000, 0, 0.5, 0);
+            driveControl.timedDrive( 0, 0.5, 0);
 
         }
     }
@@ -139,8 +142,8 @@ public class Charizard extends SimpleRobot {
    //     documentation.writeToDashboard();
         compressorSystem.start();
         charizardDrive.setup();
-        long currentTime, startTime=2, stopTime=1;
-        boolean preVal = false, shootVal = false;
+        long currentTime, startTime=2, stopTime=1, duration = 215;
+        boolean preVal = false, shootVal;
         while(isEnabled() && isOperatorControl()) {
             Timer.delay(0);
             currentTime = System.currentTimeMillis();
@@ -149,13 +152,21 @@ public class Charizard extends SimpleRobot {
             wisPiston.drive(wisVent.get(), wisDown.get(), wisUp.get());
             compressorSystem.update();
             light.setLight(lightsToggle.get());
+            
             shootVal = shootButton.get();
             if (shootVal && !preVal){
                 startTime = currentTime;
-                stopTime = currentTime+215;
+                stopTime = currentTime+duration;
+            }
+            shootControl.setTime(startTime, stopTime);
+            if (shootControl.isInTime()) {
+                shootControl.start(1.0);
+            } else if (shootLimit.get()) {
+                shootControl.start(0);
+            } else {
+                shootControl.start(-0.125);
             }
             preVal = shootVal;
-            myControl.timedRun(shooter, startTime, stopTime, 1);
         }
     }
     

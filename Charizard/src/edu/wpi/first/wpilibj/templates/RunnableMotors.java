@@ -16,13 +16,9 @@ import edu.wpi.first.wpilibj.Jaguar;
 public class RunnableMotors implements Runnable{
     Jaguar motor1;
     Jaguar motor2;
-    Jaguar motor3;
-    Jaguar motor4;
     public RunnableMotors(int pwm) {
         motor1 = new Jaguar(pwm);
         motor2 = new Jaguar(pwm+1);
-        motor3 = new Jaguar(pwm+2);
-        motor4 = new Jaguar(pwm+3);
     }
     
     public void start(double s) {
@@ -37,7 +33,5 @@ public class RunnableMotors implements Runnable{
     public void setMotors(double speed) {
         motor1.set(speed);
         motor2.set(speed);
-        motor3.set(-speed);
-        motor4.set(-speed);
     }
 }
