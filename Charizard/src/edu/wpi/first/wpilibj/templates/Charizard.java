@@ -162,9 +162,9 @@ public class Charizard extends SimpleRobot {
             }
             shootControl.setTime(startTime, stopTime);
             if (shootControl.isInTime()) {
-                shootControl.start(1.0);
+                shootControl.start(-1.0);
             } else if (shootLimit.get()) {
-                shootControl.start(-0.06);
+                shootControl.start(0.125);
             } else {
                 shootControl.start(0);
                 isShooting = false;
