@@ -40,7 +40,7 @@ public class Charizard extends SimpleRobot {
     MecanumDriveTrain charizardDrive = new MecanumDriveTrain(1, 2, 3, 4, true, false, true); 
     // PWM frontLeft, backLeft, frontRight, backRight, invertFrontLeft, invertBackLeft, invertFrontRight
     
-    DigitalInput shootLimit = new DigitalInput(1);
+    DigitalInput shootLimit = new DigitalInput(2);
     Gyro itsAGyro = new Gyro(1);
     WisVictorControler wis = new WisVictorControler(5);
     RunnableMotors shooter = new RunnableMotors(6);
@@ -162,9 +162,9 @@ public class Charizard extends SimpleRobot {
             if (shootControl.isInTime()) {
                 shootControl.start(1.0);
             } else if (shootLimit.get()) {
-                shootControl.start(0);
+                shootControl.start(-0.06);
             } else {
-                shootControl.start(-0.125);
+                shootControl.start(0);
             }
             preVal = shootVal;
         }
