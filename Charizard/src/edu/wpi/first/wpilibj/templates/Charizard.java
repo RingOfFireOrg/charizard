@@ -144,6 +144,7 @@ public class Charizard extends SimpleRobot {
         charizardDrive.setup();
         long currentTime, startTime=2, stopTime=1, duration = 215;
         boolean preVal = false, shootVal;
+        boolean isShooting = false;
         while(isEnabled() && isOperatorControl()) {
             Timer.delay(0);
             currentTime = System.currentTimeMillis();
@@ -154,9 +155,10 @@ public class Charizard extends SimpleRobot {
             light.setLight(lightsToggle.get());
             
             shootVal = shootButton.get();
-            if (shootVal && !preVal){
+            if (shootVal && !preVal && !isShooting){
                 startTime = currentTime;
                 stopTime = currentTime+duration;
+                isShooting = true;
             }
             shootControl.setTime(startTime, stopTime);
             if (shootControl.isInTime()) {
@@ -165,6 +167,7 @@ public class Charizard extends SimpleRobot {
                 shootControl.start(-0.06);
             } else {
                 shootControl.start(0);
+                isShooting = false;
             }
             preVal = shootVal;
         }
