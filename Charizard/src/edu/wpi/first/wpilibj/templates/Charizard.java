@@ -32,7 +32,7 @@ public class Charizard extends SimpleRobot {
     JoystickButton wisUp = new JoystickButton(controlStick, 4);
     JoystickButton wisNormal = new JoystickButton(controlStick, 11);
     JoystickButton wisInvert = new JoystickButton(controlStick, 7);
-    JoystickButton lightsToggle = new JoystickButton(twistStick, 1);
+    JoystickButton lightsToggle = new JoystickButton(controlStick, 10);
     JoystickButton shootButton = new JoystickButton(controlStick, 1);
     // joystickName, joystickButton
     
@@ -43,12 +43,12 @@ public class Charizard extends SimpleRobot {
     DigitalInput shootLimit = new DigitalInput(2);
     Gyro itsAGyro = new Gyro(1);
     WisVictorControler wis = new WisVictorControler(5);
-    RunnableMotors shooter = new RunnableMotors(6);
+    RunnableMotors shooter = new RunnableMotors(8);
     SuperCompressor compressorSystem = new SuperCompressor(1,2); // int pressureSwitchChannel, int compressorRelayChannel
     PistonVentable wisPiston = new PistonVentable(1, 1,2,3,4);
     Control shootControl = new Control(shooter);
     Control driveControl = new Control(charizardDrive);
-    Lights light = new Lights(8);
+    Lights light = new Lights(7);
     String serialNumber = "2014.2.2";
     String descriptionL1 = "updated version of the code that was working"; 
     String descriptionL2 = "on 2//2014, created on 2/22/2014. includes";
