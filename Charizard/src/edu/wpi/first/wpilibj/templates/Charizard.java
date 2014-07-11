@@ -49,7 +49,7 @@ public class Charizard extends SimpleRobot {
     Control shootControl = new Control(shooter);
     Control driveControl = new Control(charizardDrive);
     Lights light = new Lights(7);
-    String serialNumber = "2014.2.2";
+    String serialNumber = "2014.2.3";
     String descriptionL1 = "updated version of the code that was working"; 
     String descriptionL2 = "on 2//2014, created on 2/22/2014. includes";
     String descriptionL3 = "documentation, this is that documentation";
@@ -162,7 +162,7 @@ public class Charizard extends SimpleRobot {
             }
             shootControl.setTime(startTime, stopTime);
             if (shootControl.isInTime()) {
-                shootControl.start(-1.0);
+                shootControl.start(-0.75);
             } else if (shootLimit.get()) {
                 shootControl.start(0.125);
             } else {
